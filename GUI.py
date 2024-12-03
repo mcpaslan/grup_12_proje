@@ -75,5 +75,25 @@ dizi_list_frame.grid(row=0, column=2, padx=10, pady=10, sticky="SE")
 dizi_listbox = tkinter.Listbox(dizi_list_frame, height=10, width=30)
 dizi_listbox.grid(row=0, column=0, padx=10, pady=10)
 
+# Düzenleme/Silme Çerçevesi
+duzen_sil_frame = tkinter.LabelFrame(frame, text="Düzenleme/Silme Alanı")
+duzen_sil_frame.grid(row=2, column=0, padx=10, pady=10, sticky="SW")
+
+film_dizi_sec = tkinter.Label(duzen_sil_frame, text="Film/Dizi Seç", anchor="w")
+film_dizi_sec.grid(row=2, column=0, padx=5, pady=5, sticky="w")
+
+n3 = tkinter.StringVar()
+eklenen_sec = ttk.Combobox(duzen_sil_frame, width=15, textvariable=n3)
+eklenen_sec.grid(row=2, column=1, padx=5, pady=5)
+
+duzenle_buton = tkinter.Button(duzen_sil_frame,text="DÜZENLE", bg="blue",fg="white")
+duzenle_buton.grid(row=3, column=0, padx=5, pady=5)
+
+sil_buton = tkinter.Button(duzen_sil_frame,text="SİL", bg="red",fg="white")
+sil_buton.grid(row=3, column=1, padx=5, pady=5)
+
+bilgi_kaydet = tkinter.Button(duzen_sil_frame, text="Değişiklikleri kaydet", bg="green", fg="white")
+bilgi_kaydet.grid(row=4, column=1, sticky="S")
+
 
 window.mainloop()
