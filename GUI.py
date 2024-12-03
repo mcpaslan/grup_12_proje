@@ -56,8 +56,24 @@ notlar_textbox = tkinter.Text(secenek_giris_frame, width=25, height=10)
 notlar_textbox.grid(row=4, column=1, padx=5, pady=5)
 
 # Bilgileri Kaydet Butonu
-bilgi_ekle_buton = tkinter.Button(secenek_giris_frame, text="Bilgileri Kaydet", bg="green", fg="white")
+bilgi_ekle_buton = tkinter.Button(secenek_giris_frame, text="EKLE", bg="green", fg="white")
 bilgi_ekle_buton.grid(row=5, column=0, columnspan=2, pady=10)
+
+# Filmler Listesi Çerçevesi
+film_list_frame = tkinter.LabelFrame(frame, text="Filmler Listesi")
+film_list_frame.grid(row=0, column=2, padx=10, pady=10, sticky="NE")
+
+# Filmler için listbox
+film_listbox = tkinter.Listbox(film_list_frame, height=10, width=30)
+film_listbox.grid(row=0, column=0, padx=10, pady=10)
+
+# Diziler Listesi Çerçevesi
+dizi_list_frame = tkinter.LabelFrame(frame, text="Diziler Listesi")
+dizi_list_frame.grid(row=0, column=2, padx=10, pady=10, sticky="SE")
+
+# Diziler için listbox
+dizi_listbox = tkinter.Listbox(dizi_list_frame, height=10, width=30)
+dizi_listbox.grid(row=0, column=0, padx=10, pady=10)
 
 
 window.mainloop()
