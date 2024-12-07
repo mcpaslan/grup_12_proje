@@ -62,49 +62,31 @@ class Function:
                     self.dizi_listbox.delete(i)
 
     def duzenle(self):
-        selected_value = self.film_dizi_sec.get()  # ComboBox'tan seçilen değeri al
-        if selected_value:
-            # Seçilen öğe için düzenleme işlemi
-            ad = self.film_dizi_ad_entry.get()
-            tur = self.tur_sec.get()
-            durum = self.durum_sec.get()
-            yildiz = self.yildiz_var.get()
-            notlar = self.notlar_textbox.get("1.0", "end-1c")
+        secilen_deger = self.film_dizi_sec.get()  # ComboBox'tan seçilen değeri al
+        yeni_durum = self.durum_sec.get()  #yeni durum değerini al
+
+        if secilen_deger and yeni_durum: #seçim ve durum boş değilse devam et
 
             # Film listbox'ındaki öğeyi düzenleme
             for i in range(self.film_listbox.size()):
-                parts1 = self.film_listbox.get(i).split(" - ")
-                index1 = parts1[0].strip()
-                if index1 == selected_value:
-                    self.film_listbox.delete(i)  # Eski öğeyi sil
-                    # Yeni öğeyi ekle
-                    self.film_listbox.insert(i, f"{ad} - {durum} - {yildiz} Yıldız")
-                    break  # Düzenleme işlemi tamamlandığında döngüyü bitir
-
-            # Dizi listbox'ındaki öğeyi düzenleme
+                parts = self.film_listbox.get(i).split(" - ")
+                if parts[0].strip() == secilen_deger: #film adı eşleşiyor mu
+                    #yeni durumu ekliyor ve listeyi güncelle
+                    self.film_listbox.delete(i)
+                    self.film_listbox.insert(i, f"{parts[0]} - {yeni_durum} - {parts[2]}")
+                    break
             for i in range(self.dizi_listbox.size()):
-                parts2 = self.dizi_listbox.get(i).split(" - ")
-                index2 = parts2[0].strip()
-                if index2 == selected_value:
-                    self.dizi_listbox.delete(i)  # Eski öğeyi sil
-                    # Yeni öğeyi ekle
-                    self.dizi_listbox.insert(i, f"{ad} - {durum} - {yildiz} Yıldız")
-                    break  # Düzenleme işlemi tamamlandığında döngüyü bitir
-
-            # ComboBox'taki değerleri güncelleme
-            current_values = list(self.film_dizi_sec["values"])
-            if selected_value in current_values:
-                current_values.remove(selected_value)
-                current_values.append(ad)  # Yeni adı listeye ekle
-                self.film_dizi_sec['values'] = current_values  # Güncellenmiş değeri tekrar ata
-                self.film_dizi_sec.set(ad)  # ComboBox'ı yeni ad ile güncelle
-
-            # Alanları temizle (isteğe bağlı)
-            self.film_dizi_ad_entry.delete(0, "end")
-            self.tur_sec.set('')
-            self.durum_sec.set('')
-            self.yildiz_var.set('')
-            self.notlar_textbox.delete("1.0", "end")
+                parts= self.dizi_listbox.get(i).split(" - ")
+                if parts[0].strip() == secilen_deger: #dizi adı eşleşiyor mu
+                    #yeni durumu ekliyor ve listeyi güncelle
+                    self.dizi_listbox.delete(i)
+                    self.dizi_listbox.insert(i, f"{parts[0]} - {yeni_durum} - {parts[2]}")
+                    break
+            # ComboBox'taki seçimi temizle
+            self.film_dizi_sec.set("")
+            self.durum_sec.set("")  # Durumu da temizle
+        else:
+            messagebox.showwarning("Uyarı", "Film/Dizi seçilmeli ve yeni durum girilmelidir!")
     def kaydet(self):
         film_listesi = [self.film_listbox.get(i) for i in range(self.film_listbox.size())]
         dizi_listesi = [self.dizi_listbox.get(i) for i in range(self.dizi_listbox.size())]
