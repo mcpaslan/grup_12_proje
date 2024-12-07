@@ -101,13 +101,13 @@ class FilmDiziArayuz:
         self.bilgi_ekle_buton = tkinter.Button(self.secenek_giris_frame, text="EKLE", bg="green", fg="white",command=self.function_nesne.ekle)
         self.bilgi_ekle_buton.grid(row=5, column=0, columnspan=2, pady=10)
 
-        self.duzenle_buton = tkinter.Button(self.duzen_sil_frame,text="DÜZENLE", bg="blue",fg="white",command=self.function_nesne.duzenle)
+        self.duzenle_buton = tkinter.Button(self.duzen_sil_frame, text="DÜZENLE", bg="blue", fg="white",command=self.function_nesne.duzenle)
         self.duzenle_buton.grid(row=3, column=0, padx=5, pady=5)
 
-        self.sil_buton = tkinter.Button(self.duzen_sil_frame,text="SİL", bg="red",fg="white",command=self.function_nesne.sil)
+        self.sil_buton = tkinter.Button(self.duzen_sil_frame, text="SİL", bg="red", fg="white",command=self.function_nesne.sil)
         self.sil_buton.grid(row=3, column=1, padx=5, pady=5)
 
-        self.bilgi_kaydet = tkinter.Button(self.duzen_sil_frame, text="Değişiklikleri kaydet", bg="green", fg="white")
+        self.bilgi_kaydet = tkinter.Button(self.duzen_sil_frame, text="Değişiklikleri kaydet", bg="green", fg="white",command=self.function_nesne.kaydet)
         self.bilgi_kaydet.grid(row=4, column=1, sticky="S")
 
 
