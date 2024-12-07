@@ -1,5 +1,7 @@
 import tkinter
 from tkinter import ttk
+from tkinter import messagebox
+from function import Function
 class FilmDiziArayuz:
 
     def __init__(self,window):
@@ -58,10 +60,6 @@ class FilmDiziArayuz:
         self.notlar_textbox = tkinter.Text(self.secenek_giris_frame, width=25, height=10)
         self.notlar_textbox.grid(row=4, column=1, padx=5, pady=5)
 
-        # Bilgileri Kaydet Butonu
-        self.bilgi_ekle_buton = tkinter.Button(self.secenek_giris_frame, text="EKLE", bg="green", fg="white")
-        self.bilgi_ekle_buton.grid(row=5, column=0, columnspan=2, pady=10)
-
         # Filmler Listesi Çerçevesi
         self.film_list_frame = tkinter.LabelFrame(self.frame, text="Filmler Listesi")
         self.film_list_frame.grid(row=0, column=2, padx=10, pady=10, sticky="NE")
@@ -88,13 +86,28 @@ class FilmDiziArayuz:
         self.n3 = tkinter.StringVar()
         self.eklenen_sec = ttk.Combobox(self.duzen_sil_frame, width=15, textvariable=self.n3)
         self.eklenen_sec.grid(row=2, column=1, padx=5, pady=5)
+        #instance oluşturma
+        self.function_nesne = Function(
+            self.film_dizi_ad_entry,
+            self.tur_sec,
+            self.durum_sec,
+            self.yildiz_var,
+            self.notlar_textbox,
+            self.film_listbox,
+            self.dizi_listbox,
+            self.eklenen_sec
+        )
+        # Bilgileri Ekle Butonu
+        self.bilgi_ekle_buton = tkinter.Button(self.secenek_giris_frame, text="EKLE", bg="green", fg="white",command=self.function_nesne.ekle)
+        self.bilgi_ekle_buton.grid(row=5, column=0, columnspan=2, pady=10)
 
-        self.duzenle_buton = tkinter.Button(self.duzen_sil_frame,text="DÜZENLE", bg="blue",fg="white")
+        self.duzenle_buton = tkinter.Button(self.duzen_sil_frame,text="DÜZENLE", bg="blue",fg="white",command=self.function_nesne.duzenle)
         self.duzenle_buton.grid(row=3, column=0, padx=5, pady=5)
 
-        self.sil_buton = tkinter.Button(self.duzen_sil_frame,text="SİL", bg="red",fg="white")
+        self.sil_buton = tkinter.Button(self.duzen_sil_frame,text="SİL", bg="red",fg="white",command=self.function_nesne.sil)
         self.sil_buton.grid(row=3, column=1, padx=5, pady=5)
 
         self.bilgi_kaydet = tkinter.Button(self.duzen_sil_frame, text="Değişiklikleri kaydet", bg="green", fg="white")
         self.bilgi_kaydet.grid(row=4, column=1, sticky="S")
+
 
