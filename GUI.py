@@ -1,6 +1,5 @@
 import tkinter
 from tkinter import ttk
-from tkinter import messagebox
 from function import Function
 class FilmDiziArayuz:
 
@@ -109,5 +108,3 @@ class FilmDiziArayuz:
 
         self.bilgi_kaydet = tkinter.Button(self.duzen_sil_frame, text="Değişiklikleri kaydet", bg="green", fg="white",command=self.function_nesne.kaydet)
         self.bilgi_kaydet.grid(row=4, column=1, sticky="S")
-
-
