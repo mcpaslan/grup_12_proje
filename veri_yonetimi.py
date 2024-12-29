@@ -1,6 +1,6 @@
 import json
 class VeriYonetimi:
-    def __init__(self, dosya_adi="veriler.json"):
+    def __init__(self, dosya_adi):
         self.dosya_adi = dosya_adi
     def veri_kaydet(self, film_dizi_listesi):
         try:

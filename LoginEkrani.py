@@ -1,8 +1,10 @@
+import json
 from tkinter import *
 from tkinter import messagebox
-import GUI  # FilmDiziArayuz sınıfı için
+import GUI
 import KayitOlEkrani
-import ast
+import main  # Import the main module to use set_ad
+
 class LoginEkrani:
     def __init__(self, root):
         self.root = root
@@ -10,27 +12,41 @@ class LoginEkrani:
         self.root.geometry("925x500+300+200")
         self.root.configure(bg="#0b105e")
         self.root.resizable(False, False)
+        self.kullanici_ad = ""
 
         def kayit_ol_buton():
             self.root.destroy()
             kayit_pencere = Tk()
             KayitOlEkrani.KayitOlEkrani(kayit_pencere)
             kayit_pencere.mainloop()
+
         def giris_yap():
-            kullanici_ad = kullanici.get()
+            self.kullanici_ad = kullanici.get()
             kullanici_sifre = sifre.get()
 
             try:
-                # Kullanıcı bilgilerini data.txt dosyasından kontrol et
-                with open("data.txt", "r") as file:
-                    data = file.read()
-                    r = ast.literal_eval(data)  # Data dosyasını dict'e dönüştür
+                with open("veriler.json", "r") as file:
+                    try:
+                        data = json.load(file)
+                    except json.JSONDecodeError:
+                        data = {}
 
-                if kullanici_ad in r and r[kullanici_ad] == kullanici_sifre:
+                if self.kullanici_ad in data and data[self.kullanici_ad] == kullanici_sifre:
+                    user_file_name = f"{self.kullanici_ad}.json"
+                    try:
+                        with open(user_file_name, "r") as user_file:
+                            user_data = json.load(user_file)
+                    except FileNotFoundError:
+                        user_data = {}
+                        with open(user_file_name, "w") as user_file:
+                            json.dump(user_data, user_file, indent=4)
+
                     messagebox.showinfo("Başarılı", "Giriş Başarılı!")
-                    self.root.destroy()  # Giriş ekranını kapat
-                    ana_pencere = Tk()  # Yeni pencere aç
-                    GUI.FilmDiziArayuz(ana_pencere)  # GUI ekranını başlat
+                    main.set_ad(self.kullanici_ad)  # Use the set_ad from main
+                    self.root.destroy()
+
+                    ana_pencere = Tk()
+                    GUI.FilmDiziArayuz(ana_pencere)
                     ana_pencere.mainloop()
                 else:
                     messagebox.showerror("Hata", "Kullanıcı adı veya şifre yanlış!")
@@ -58,7 +74,7 @@ class LoginEkrani:
             if name == '':
                 kullanici.insert(0, "Kullanıcı adı:")
 
-        kullanici = Entry(frame, width=25, fg="white", border=0, bg="#161f99", font=("Microsot YaHei UI Light", 11))
+        kullanici = Entry(frame, width=25, fg="white", border=0, bg="#161f99", font=("Microsoft YaHei UI Light", 11))
         kullanici.place(x=30, y=80)
         kullanici.insert(0, "Kullanıcı adı:")
         kullanici.bind('<FocusIn>', on_enter)
@@ -74,7 +90,7 @@ class LoginEkrani:
             if name == '':
                 sifre.insert(0, "Şifre:")
 
-        sifre = Entry(frame, width=25, fg="white", border=0, bg="#161f99", font=("Microsot YaHei UI Light", 11))
+        sifre = Entry(frame, width=25, fg="white", border=0, bg="#161f99", font=("Microsoft YaHei UI Light", 11))
         sifre.place(x=30, y=150)
         sifre.insert(0, "Şifre:")
         sifre.bind('<FocusIn>', on_enter)
@@ -88,5 +104,5 @@ class LoginEkrani:
         label = Label(frame, text="Hesabın yok mu?", fg="white", bg="#161f99", font=("Arial", 9))
         label.place(x=85, y=270)
 
-        kayit_ol = Button(frame, width=6, text="Kayıt Ol", border=0, fg="white", bg="#f23031", cursor="hand2",command=kayit_ol_buton)
+        kayit_ol = Button(frame, width=6, text="Kayıt Ol", border=0, fg="white", bg="#f23031", cursor="hand2", command=kayit_ol_buton)
         kayit_ol.place(x=215, y=270)

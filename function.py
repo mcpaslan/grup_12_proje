@@ -1,8 +1,7 @@
 from veri_yonetimi import VeriYonetimi
-import tkinter as tk
 from tkinter import messagebox
 class Function:
-    def __init__(self, film_dizi_ad_entry, tur_sec, durum_sec, yildiz_var, notlar_textbox, film_listbox, dizi_listbox, film_dizi_sec):
+    def __init__(self, film_dizi_ad_entry, tur_sec, durum_sec, yildiz_var, notlar_textbox, film_listbox, dizi_listbox,film_dizi_sec, kullanici_ad):
         self.film_dizi_ad_entry = film_dizi_ad_entry
         self.tur_sec = tur_sec
         self.durum_sec = durum_sec
@@ -11,7 +10,9 @@ class Function:
         self.film_listbox = film_listbox
         self.dizi_listbox = dizi_listbox
         self.film_dizi_sec = film_dizi_sec
-        self.veri_yonetimi = VeriYonetimi()
+        self.kullanici_ad = kullanici_ad  # Set the username
+        file = f"{self.kullanici_ad}.json"  # Use the user's specific file
+        self.veri_yonetimi = VeriYonetimi(file)
         self.yaz()
     def yaz(self):
         for i, veri in enumerate(self.veri_yonetimi.veri_yukle()):

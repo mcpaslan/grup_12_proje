@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 import LoginEkrani
-import ast
+import json
 
 class KayitOlEkrani:
     def __init__(self,window):
@@ -22,25 +22,24 @@ class KayitOlEkrani:
 
             if kullanici_sifre == kullanici_sifre_onayla:
                 try:
-                    # Dosyayı okuma ve veri güncelleme
-                    with open('data.txt', 'r+') as file:
-                        data = file.read()
-                        if data:
-                            r = ast.literal_eval(data)  # Veriyi bir Python dict olarak çözümle
-                        else:
-                            r = {}  # Eğer dosya boşsa, boş bir dict oluştur
+                    # JSON dosyasını okuma ve veri güncelleme
+                    with open('veriler.json', 'r+') as file:
+                        try:
+                            data = json.load(file)  # Veriyi bir Python dict olarak çözümle
+                        except json.JSONDecodeError:
+                            data = {}  # Eğer dosya boşsa, boş bir dict oluştur
                         dict2 = {kullanici_ad: kullanici_sifre}
-                        r.update(dict2)  # Yeni kullanıcıyı ekle
-                        file.truncate(0)  # Dosyayı temizle
+                        data.update(dict2)  # Yeni kullanıcıyı ekle
                         file.seek(0)  # Başlangıç noktasına git
-                        file.write(str(r))  # Güncellenmiş veriyi dosyaya yaz
+                        file.truncate(0)  # Dosyayı temizle
+                        json.dump(data, file, indent=4)  # Güncellenmiş veriyi JSON formatında dosyaya yaz
 
                     messagebox.showinfo("Kayıt Ol", "Kayıt Olundu")
                 except FileNotFoundError:
                     # Eğer dosya yoksa, yeni bir dosya oluştur
-                    with open('data.txt', 'w') as file:
-                        r = {kullanici_ad: kullanici_sifre}
-                        file.write(str(r))
+                    with open('veriler.json', 'w') as file:
+                        data = {kullanici_ad: kullanici_sifre}
+                        json.dump(data, file, indent=4)  # Yeni dosyaya JSON formatında veri yaz
                     messagebox.showinfo("Kayıt Ol", "Kayıt Olundu")
             else:
                 messagebox.showerror('Hata', 'Her 2 şifre de aynı olmalı!')

@@ -1,6 +1,7 @@
 import tkinter
 from tkinter import ttk
 from function import Function
+import main
 class FilmDiziArayuz:
 
     def __init__(self,window):
@@ -111,7 +112,8 @@ class FilmDiziArayuz:
             self.notlar_textbox,
             self.film_listbox,
             self.dizi_listbox,
-            self.eklenen_sec
+            self.eklenen_sec,
+            main.ad
         )
         # Bilgileri Ekle Butonu
         self.bilgi_ekle_buton = tkinter.Button(self.secenek_giris_frame, text="EKLE",width=25, bg="green", fg="white",command=self.function_nesne.ekle)
